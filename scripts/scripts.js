@@ -1,8 +1,67 @@
 // matches = books
 // page = 1;
-console.log("this is working")
-// if (!books && !Array.isArray(books)) throw new Error('Source required') 
-// if (!range && range.length < 2) throw new Error('Range must be an array with two numbers')
+
+/**
+ * This object houses all the html elements with the "data" attribute.
+ * 
+ * @type {object}
+ */
+const elements = {
+    header: {
+        search: document.querySelector('[data-header-search]'),
+        settings: document.querySelector('[data-header-settings]')
+    },
+    other: {
+        items: document.querySelector('[data-list-items]'),
+        message: document.querySelector('[data-list-message]'),
+        button: document.querySelector('[data-list-button]')
+    },
+    list: {
+        overlay: document.querySelector('[data-list-active]'),
+        blur: document.querySelector('[data-list-blur]'),
+        image: document.querySelector('[data-list-image]'),
+        title: document.querySelector('[data-list-title]'),
+        subtitle: document.querySelector('[data-list-subtitle]'),
+        description: document.querySelector('[data-list-description]'),
+        close: document.querySelector('[data-list-close]')
+    },
+    search: {
+        overlay: document.querySelector('[data-search-overlay]'),
+        form: document.querySelector('[data-search-form]'),
+        title: document.querySelector('[data-search-title]'),
+        genre: document.querySelector('[data-search-genres]'),
+        author: document.querySelector('[data-search-authors]'),
+        cancel: document.querySelector('[data-search-cancel]')
+    },
+    settings: {
+        overlay: document.querySelector('[data-settings-overlay]'),
+        form: document.querySelector('[data-settings-form]'),
+        theme: document.querySelector('[data-settings-theme]'),
+        cancel: document.querySelector('[data-settings-cancel]')
+    }
+};
+
+
+// const handleSettings = () => {
+//     const isOpen = elements.settings.overlay
+//     console.log("setting toggle")
+//     if (!isOpen.open) {
+//         isOpen.open = true;
+//     } else isOpen.open = false
+// }
+
+
+// elements.header.settings.addEventListener("click", handleSettings)
+// elements.settings.cancel.addEventListener("click", handleSettings)
+
+// data-settings-overlay.submit; {
+//     preventDefault()
+//     const formData = new FormData(event.target)
+//     const result = Object.fromEntries(formData)
+//     document.documentElement.style.setProperty('--color-dark', css[result.theme].dark);
+//     document.documentElement.style.setProperty('--color-light', css[result.theme].light);
+//     data-settings-overlay).open === false
+// }
 
 // day = {
 //     dark: '10, 10, 20',
@@ -13,6 +72,17 @@ console.log("this is working")
 //     dark: '255, 255, 255',
 //     light: '10, 10, 20',
 // }
+
+// data-settings-theme.value === window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day'
+// v = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches? 'night' | 'day'
+
+// documentElement.style.setProperty('--color-dark', css[v].dark);
+// documentElement.style.setProperty('--color-light', css[v].light);
+
+// if (!books && !Array.isArray(books)) throw new Error('Source required') 
+// if (!range && range.length < 2) throw new Error('Range must be an array with two numbers')
+
+
 
 // fragment = document.createDocumentFragment()
 // const extracted = books.slice(0, 36)
@@ -60,11 +130,7 @@ console.log("this is working")
 
 // data-search-authors.appendChild(authors)
 
-// data-settings-theme.value === window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day'
-// v = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches? 'night' : 'day'
 
-// documentElement.style.setProperty('--color-dark', css[v].dark);
-// documentElement.style.setProperty('--color-light', css[v].light);
 // data-list-button = "Show more (books.length - BOOKS_PER_PAGE)"
 
 // data-list-button.disabled = !(matches.length - [page * BOOKS_PER_PAGE] > 0)
@@ -75,7 +141,6 @@ console.log("this is working")
 // ]
 
 // data-search-cancel.click() { data-search-overlay.open === false }
-// data-settings-cancel.click() { querySelect(data-settings-overlay).open === false }
 // data-settings-form.submit() { actions.settings.submit }
 // data-list-close.click() { data-list-active.open === false }
 
@@ -113,7 +178,7 @@ console.log("this is working")
 //     else data-list-message.class.remove('list__message_show')
     
 
-//     data-list-items.innerHTML = ''
+    // data-list-items.innerHTML = ''
 //     const fragment = document.createDocumentFragment()
 //     const extracted = source.slice(range[0], range[1])
 
@@ -139,47 +204,41 @@ console.log("this is working")
 //         fragment.appendChild(element)
 //     }
     
-//     data-list-items.appendChild(fragments)
+    // data-list-items.appendChild(fragments)
 //     initial === matches.length - [page * BOOKS_PER_PAGE]
 //     remaining === hasRemaining ? initial : 0
 //     data-list-button.disabled = initial > 0
 
 //     data-list-button.innerHTML = /* html */ `
-//         <span>Show more</span>
-//         <span class="list__remaining"> (${remaining})</span>
-//     `
+// //         <span>Show more</span>
+// //         <span class="list__remaining"> (${remaining})</span>
+// //     `
 
 //     window.scrollTo({ top: 0, behavior: 'smooth' });
-//     data-search-overlay.open = false
+    // data-search-overlay.open = false
 // }
 
-// data-settings-overlay.submit; {
-//     preventDefault()
-//     const formData = new FormData(event.target)
-//     const result = Object.fromEntries(formData)
-//     document.documentElement.style.setProperty('--color-dark', css[result.theme].dark);
-//     document.documentElement.style.setProperty('--color-light', css[result.theme].light);
-//     data-settings-overlay).open === false
-// }
+
 
 // data-list-items.click() {
-//     pathArray = Array.from(event.path || event.composedPath())
-//     active;
+    // console.log("hello")
+    // pathArray = Array.from(event.path || event.composedPath())
+    // active;
 
-//     for (node; pathArray; i++) {
-//         if active break;
-//         const previewId = node?.dataset?.preview
+    // for (node; pathArray; i++) {
+    //     if active break;
+    //     const previewId = node?.dataset?.preview
     
-//         for (const singleBook of books) {
-//             if (singleBook.id === id) active = singleBook
-//         } 
-//     }
+    //     for (const singleBook of books) {
+    //         if (singleBook.id === id) active = singleBook
+    //     } 
+    // }
     
-//     if !active return
-//     data-list-active.open === true
-//     data-list-blur + data-list-image === active.image
-//     data-list-title === active.title
+    // if !active return
+    // data-list-active.open === true
+    // data-list-blur + data-list-image === active.image
+    // data-list-title === active.title
     
-//     data-list-subtitle === '${authors[active.author]} (${Date(active.published).year})'
-//     data-list-description === active.description
+    // data-list-subtitle === '${authors[active.author]} (${Date(active.published).year})'
+    // data-list-description === active.description
 // }
