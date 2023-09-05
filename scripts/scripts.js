@@ -1,9 +1,11 @@
 // matches = books
 // page = 1;
+import { BOOKS_PER_PAGE, AUTHORS, GENRES, BOOKS } from "./data.js"
+
 
 /**
- * This object houses all the html elements with the "data" attribute.
- * 
+ * This object gets and houses all the html elements used in this file.
+ *
  * @type {object}
  */
 const elements = {
@@ -37,22 +39,37 @@ const elements = {
         overlay: document.querySelector('[data-settings-overlay]'),
         form: document.querySelector('[data-settings-form]'),
         theme: document.querySelector('[data-settings-theme]'),
+        save: document.querySelector('button.overlay__button.overlay__button_primary[form="settings"]'),
         cancel: document.querySelector('[data-settings-cancel]')
     }
 };
 
 
-// const handleSettings = () => {
-//     const isOpen = elements.settings.overlay
-//     console.log("setting toggle")
-//     if (!isOpen.open) {
-//         isOpen.open = true;
-//     } else isOpen.open = false
+const handleThemeSettings = () => {
+    const isOpen = elements.settings.overlay
+
+    if (!isOpen.open) {
+        isOpen.open = true;
+    } else {
+        isOpen.open = false
+    }
+}
+
+// console.log(elements.settings.save)
+console.log(elements.settings.cancel)
+elements.header.settings.addEventListener("click", handleThemeSettings)
+elements.settings.cancel.addEventListener("click", handleThemeSettings)
+
+// const handleAddTheme = (event) => {
+//     event.preventDefault()
+//     console.log("add button working")
+//     const formData = new FormData(event.target)
+//     const result = Object.fromEntries(formData)
+//     document.documentElement.style.setProperty('--color-dark', css[result.theme].dark);
+//     document.documentElement.style.setProperty('--color-light', css[result.theme].light);
 // }
 
-
-// elements.header.settings.addEventListener("click", handleSettings)
-// elements.settings.cancel.addEventListener("click", handleSettings)
+// elements.settings.save.addEventListener("click", handleAddTheme)
 
 // data-settings-overlay.submit; {
 //     preventDefault()
@@ -60,7 +77,6 @@ const elements = {
 //     const result = Object.fromEntries(formData)
 //     document.documentElement.style.setProperty('--color-dark', css[result.theme].dark);
 //     document.documentElement.style.setProperty('--color-light', css[result.theme].light);
-//     data-settings-overlay).open === false
 // }
 
 // day = {
@@ -74,10 +90,14 @@ const elements = {
 // }
 
 // data-settings-theme.value === window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day'
-// v = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches? 'night' | 'day'
+// v = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches? 'night' : 'day'
 
 // documentElement.style.setProperty('--color-dark', css[v].dark);
 // documentElement.style.setProperty('--color-light', css[v].light);
+
+
+
+
 
 // if (!books && !Array.isArray(books)) throw new Error('Source required') 
 // if (!range && range.length < 2) throw new Error('Range must be an array with two numbers')
