@@ -1,5 +1,3 @@
-// matches = books
-// page = 1;
 
 // Import all values from data.js to be used in this file.
 import { BOOKS_PER_PAGE, authors, genres, books } from "./data.js";
@@ -10,7 +8,8 @@ incremented by 1 each time a new book is added. */
 let totalBooksShown = 0;
 
 // "fragment" variable houses each book element on the page.
-const fragment = document.createDocumentFragment()
+const fragment = document.createDocumentFragment();
+
 
 /**
  * This object gets and houses all the html elements used in this file for easy
@@ -55,6 +54,23 @@ const elements = {
     }
 };
 
+/* 
+An object with colour parameters set for "light mode" to be used in the
+handleAddTheme function */
+const day = {
+    dark: '10, 10, 20',
+    light: '255, 255, 255'
+};
+
+/* 
+An object with colour parameters set for "dark mode" to be used in the
+handleAddTheme function */
+const night = {
+    dark: '255, 255, 255',
+    light: '10, 10, 20'
+};
+
+
 /**
  * A function that takes a book object from the "books" array, destructures it's
  * various values, creates a "div" element, and then inputs each value inside
@@ -95,21 +111,6 @@ const createBookElements = (book) => {
     return bookElement;
 };
 
-/* 
-An object with colour parameters set for "light mode" to be used in the
-handleAddTheme function */
-const day = {
-    dark: '10, 10, 20',
-    light: '255, 255, 255',
-}
-
-/* 
-An object with colour parameters set for "dark mode" to be used in the
-handleAddTheme function */
-const night = {
-    dark: '255, 255, 255',
-    light: '10, 10, 20',
-}
 
 /**
  * A handler function that adds 36 books to the 'data-list-items' element on the
@@ -147,7 +148,14 @@ const handleAddBooks = () => {
 };
 
 
-
+/**
+ * A handler function that fires whenever anything inside the 'data-list-items'
+ * element is clicked. It's function is to take the book element that is closest
+ * to the cursor (i.e. the one that was clicked) and display a preview overlay
+ * with the books details.
+ *
+ * @param {Event} event 
+ */
 const handlePreview = (event) => {
 
     /* Select the div with a class name of "preview" that's closest to the mouse
@@ -155,7 +163,7 @@ const handlePreview = (event) => {
     const targetOrder = event.target.closest('.preview');
 
     // Select "[data-list-active]" overlay and save to variable for convenience.
-    const isPreviewOpen = elements.preview.overlay
+    const isPreviewOpen = elements.preview.overlay;
 
     /* Check if the isPreviewOpen variable's "open" property is true and set to
     false if so. This closes the overlay*/
@@ -194,19 +202,22 @@ const handlePreview = (event) => {
     };
 };
 
+
 /**
  * A handler that opens and closes the search overlay.
  */
 const handleSearchToggle = () => {
     // Set the search overlay button to a variable for convenience
-    const isSearchOpen = elements.search.overlay
+    const isSearchOpen = elements.search.overlay;
 
+    // Check if overlay is open and close if true, open if not.
     if (isSearchOpen.open) {
         isSearchOpen.open = false;
     } else {
-        isSearchOpen.open = true
+        isSearchOpen.open = true;
     }
 }
+
 
 /**
  * A function that adds "option" elements to the "select" elements for genre and
@@ -218,38 +229,51 @@ const handleSearchToggle = () => {
  * @param {string}
  */
 const addSelectOptions = (selectContainer, dataObj, allOption) => {
-
+    // Create "option" element for "All Genres/Authors"
     const allOptionElement = document.createElement("option");
     allOptionElement.innerText = `All ${allOption}`;
     selectContainer.appendChild(allOptionElement);
 
+    /*
+    Loop through object passed in (genres or authors), create option element for
+    each, and append to selectContainer */
     for (const [key, val] of Object.entries(dataObj)) {
         const optionElement = document.createElement("option");
         optionElement.dataset.id = key;
 
         optionElement.innerText = val;
         selectContainer.appendChild(optionElement);
-    }
-
-}
-
+    };
+};
 
 
-function clearList() {
+/**
+ * A function that clears the "data-list-items" element of all it's current book
+ * elements so that the searched element can be added.
+ */
+const clearList = () => {
     const list = document.querySelector('[data-list-items]');
     while (list.firstChild) {
         list.removeChild(list.firstChild);
-    }
-}
+    };
+};
 
+
+/**
+ * A handler function that fires whenever the search button is clicked. It sorts
+ * all of the objects in the "books" array by the selected genre and author and
+ * by the text entered into the "title" field of the search overlay.
+ *
+ * @param {Event} event 
+ */
 const handleSearchBooks = (event) => {
     event.preventDefault()
     // Get title value and save to a variable
-    const titleValue = elements.search.title.value
+    const titleValue = elements.search.title.value;
     // Get genre "select" element
-    const genreElement = elements.search.genre
+    const genreElement = elements.search.genre;
     // Get author "select" element
-    const authorElement = elements.search.author
+    const authorElement = elements.search.author;
     // Get selected "option" element
     const selectedGenre = genreElement.options[genreElement.selectedIndex];
     // Get selected "option" element
@@ -258,69 +282,97 @@ const handleSearchBooks = (event) => {
     const genreId = selectedGenre.getAttribute("data-id");
     // Get id value of selected author element
     const authorId = selectedAuthor.getAttribute("data-id");
+
+    // Declare variables that will hold filtered books.
     let matchingGenreBooks;
     let matchingAuthorBooks;
     let matchingTitleBooks;
 
+    /*
+    Check if the "books" array holds any of the given inputs and if so, save
+    those books to thier respective variables. */
     if (genreId) {
         matchingGenreBooks = books.filter((book) => book.genres.includes(genreId));
     } else {
-        matchingGenreBooks = books
-    }
+        matchingGenreBooks = books;
+    };
     if (authorId) {
         matchingAuthorBooks = books.filter((book) => book.author === authorId);
     } else {
-        matchingAuthorBooks = books
-    }
+        matchingAuthorBooks = books;
+    };
     if (titleValue) {
         matchingTitleBooks = books.filter((book) => book.title.toLowerCase().includes(titleValue));
     } else {
-        matchingTitleBooks = books
-    }
+        matchingTitleBooks = books;
+    };
 
+    /*
+    From the values declared above, get a final array that comprises all of the
+    matching books from the matchingGenreBooks, matchingAuthorBooks and
+    matchingTitleBooks arrays. */
     const matchingBooks = matchingGenreBooks.filter((book) =>
         matchingAuthorBooks.includes(book) && matchingTitleBooks.includes(book)
     );
 
+    // Run clearList to remove previous books from the "data-list-items" element.
     clearList();
+
+    // Re-initialise totalBooksShown to 0.
     totalBooksShown = 0;
 
+    // Loop through matchingBooks and create elements for each book.
     for (const book of matchingBooks) {
-        const newBook = createBookElements(book)
+        const newBook = createBookElements(book);
         fragment.appendChild(newBook);
         totalBooksShown += 1
-    }
+    };
 
+    // Append new book fragment to the DOM.
     elements.main.items.appendChild(fragment);
 
-    console.log(totalBooksShown)
-
+    /* 
+    This conditional checks how many books are being displayed and updates
+    the show more buttom accordingly, either changing its text or disabling it. */
     if (totalBooksShown > 0) {
-        elements.main.button.innerText = `Show more (${matchingBooks.length - totalBooksShown})`
+        elements.main.button.innerText = `Show more (${matchingBooks.length - totalBooksShown})`;
+        elements.main.message.classList.remove("list__message_show");
     } else {
-        elements.main.button.disabled = true
-    }
+        elements.main.button.disabled = true;
+        elements.main.message.classList.add("list__message_show");
+    };
 
-    handleSearchToggle()
-}
+    // Call handleSearchToggle to close the overlay.
+    handleSearchToggle();
+};
 
 
-
+/**
+ * A handler that opens and closes the theme overlay.
+ */
 const handleThemeSettings = () => {
-    const areSettingsOpen = elements.settings.overlay
+    // Set the theme overlay button to a variable for convenience
+    const areSettingsOpen = elements.settings.overlay;
 
+    // Check if overlay is open and close if true, open if not.
     if (areSettingsOpen.open) {
         areSettingsOpen.open = false;
     } else {
-        areSettingsOpen.open = true
-    }
-}
+        areSettingsOpen.open = true;
+    };
+};
 
 
+/**
+ * A handler function that changes the theme of the page to either light or dark
+ * mode based on the inputs provided.
+ *
+ * @param {Event} event 
+ */
 const handleAddTheme = (event) => {
-    event.preventDefault()
-    console.log("add button working")
-    const themeValue = elements.settings.theme.value 
+    event.preventDefault();
+    console.log("add button working");
+    const themeValue = elements.settings.theme.value;
 
     if (themeValue === 'day') {
         document.documentElement.style.setProperty("--color-dark", day.dark);
@@ -328,76 +380,43 @@ const handleAddTheme = (event) => {
     } else if (themeValue === "night") {
         document.documentElement.style.setProperty("--color-dark", night.dark);
         document.documentElement.style.setProperty("--color-light", night.light);
-    }
-    console.log(themeValue)
-    handleThemeSettings()
-}
+    };
 
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.documentElement.setAttribute('prefers-color-scheme', '--color-dark');
-} else {
-    document.documentElement.setAttribute('prefers-color-scheme', '--color-light');
-}
-document.documentElement.style
+    // Run handlethemesettings to close the overlay
+    handleThemeSettings();
+};
 
-// console.log(window.matchMedia('(prefers-color-scheme: light)').matches)
-// elements.settings.theme.value === window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day'
-
-// v = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day'
-
-// documentElement.style.setProperty('--color-dark', css[v].dark);
-// documentElement.style.setProperty('--color-light', css[v].light);
 
 
 // Function is run when when page loads to add the first 36 books.
 handleAddBooks()
+
 /* 
 addSelectOptions function is run with the genre "select" element, "genres"
 object and "Genres" string. */
-addSelectOptions(elements.search.genre, genres, "Genres")
+addSelectOptions(elements.search.genre, genres, "Genres");
 /* 
 addSelectOptions function is run with the author "select" element, "author" object and
 "Authors" string. */
-addSelectOptions(elements.search.author, authors, "Authors")
+addSelectOptions(elements.search.author, authors, "Authors");
 
 
+
+// This is the show more button.
 elements.main.button.addEventListener("click", handleAddBooks);
 
+// These buttons open and close the book preview.
 elements.main.items.addEventListener("click", handlePreview);
 elements.preview.close.addEventListener("click", handlePreview);
 
-elements.header.search.addEventListener("click", handleSearchToggle)
-elements.search.cancel.addEventListener("click", handleSearchToggle)
-elements.search.search.addEventListener("click", handleSearchBooks)
+// These buttons open and close the search overlay.
+elements.header.search.addEventListener("click", handleSearchToggle);
+elements.search.cancel.addEventListener("click", handleSearchToggle);
+// This is the search button.
+elements.search.search.addEventListener("click", handleSearchBooks);
 
-elements.header.settings.addEventListener("click", handleThemeSettings)
-elements.settings.cancel.addEventListener("click", handleThemeSettings)
+// These buttons open and close the settings overlay.
+elements.header.settings.addEventListener("click", handleThemeSettings);
+elements.settings.cancel.addEventListener("click", handleThemeSettings);
+// This is the save button.
 elements.settings.save.addEventListener("click", handleAddTheme);
-
-
-
-// data-settings-overlay.submit; {
-//     preventDefault()
-//     const formData = new FormData(event.target)
-//     const result = Object.fromEntries(formData)
-//     document.documentElement.style.setProperty('--color-dark', css[result.theme].dark);
-//     document.documentElement.style.setProperty('--color-light', css[result.theme].light);
-// }
-
-
-
-// if (!books && !Array.isArray(books)) throw new Error('Source required') 
-// if (!range && range.length < 2) throw new Error('Range must be an array with two numbers')
-
-
-
-
-
-
-
-// data-list-button.disabled = !(matches.length - [page * BOOKS_PER_PAGE] > 0)
-
-// data-list-button.innerHTML = /* html */ [
-//     '<span>Show more</span>',
-//     '<span class="list__remaining"> (${matches.length - [page * BOOKS_PER_PAGE] > 0 ? matches.length - [page * BOOKS_PER_PAGE] : 0})</span>',
-// ]
