@@ -160,7 +160,7 @@ const handlePreview = (event) => {
 
     /* Select the div with a class name of "preview" that's closest to the mouse
     click and save to a variable. */
-    const targetOrder = event.target.closest('.preview');
+    const targetOrder = event.target.closest(".preview");
 
     // Select "[data-list-active]" overlay and save to variable for convenience.
     const isPreviewOpen = elements.preview.overlay;
@@ -178,15 +178,15 @@ const handlePreview = (event) => {
         isPreviewOpen.open = true;
 
         // Get target order image element and save to a variable.
-        const previewImage = targetOrder.querySelector('.preview__image');
+        const previewImage = targetOrder.querySelector(".preview__image");
         // Get text "preview__title" element's inner text.
-        const previewTitle = targetOrder.querySelector('.preview__title').innerText;
+        const previewTitle = targetOrder.querySelector(".preview__title").innerText;
         // Get text "previewAuthor" element's inner text.
-        const previewAuthor = targetOrder.querySelector('.preview__author').innerText;
+        const previewAuthor = targetOrder.querySelector(".preview__author").innerText;
         // Get text "previewDescription" element's inner text.
-        const previewDescription = targetOrder.querySelector('#description').innerText;
+        const previewDescription = targetOrder.querySelector("#description").innerText;
         // Get text "previewDateText" element's inner text.
-        const previewDateText = targetOrder.querySelector('#date').innerText;
+        const previewDateText = targetOrder.querySelector("#date").innerText;
 
         // Get the src of previewImage
         const previewSrc = previewImage.src
@@ -374,7 +374,7 @@ const handleAddTheme = (event) => {
     console.log("add button working");
     const themeValue = elements.settings.theme.value;
 
-    if (themeValue === 'day') {
+    if (themeValue === "day") {
         document.documentElement.style.setProperty("--color-dark", day.dark);
         document.documentElement.style.setProperty("--color-light", day.light);
     } else if (themeValue === "night") {
