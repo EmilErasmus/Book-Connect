@@ -1,5 +1,5 @@
 # EMIERA195_FTC2306_GroupA_EmilErasmus_IWA19
-## Emil Erasmus IWA Final Capstone Project
+## Book Connect App
 
 ### Author:
 Emil Erasmus
