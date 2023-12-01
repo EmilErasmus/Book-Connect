@@ -1,5 +1,4 @@
-# EMIERA195_FTC2306_GroupA_EmilErasmus_IWA19
-## Book Connect App
+## Emil's Library
 
 ### Author:
 Emil Erasmus
@@ -8,7 +7,7 @@ Emil Erasmus
 This web app acts as an online library. It allows users to view books and sort them by title, genre and author. It also contains a dark/light mode toggle for improved user experience
 
 ### Netlify Link:
-https://phenomenal-griffin-0316b4.netlify.app/
+https://emilslibrary.netlify.app
 
 ### Software apps used: 
 - Visual Studio Code 
